@@ -6,16 +6,16 @@ container.appendChild(header);
 //form
 const searchForm = document.createElement("form");
 //input field
-const ID = document.createElement("input");
-ID.setAttribute("type", "text");
-ID.setAttribute("placeholder", "Zip Code");
-ID.setAttribute("name", "query");
+const zip = document.createElement("input");
+zip.setAttribute("type", "text");
+zip.setAttribute("placeholder", "Zip Code");
+zip.setAttribute("name", "query");
 //button
 let btn = document.createElement("input");
 btn.setAttribute("type", "submit");
 btn.setAttribute("value", "Get Weather");
 //append all
-searchForm.append(ID);
+searchForm.append(zip);
 searchForm.append(btn);
 container.appendChild(searchForm);
 //state object
@@ -79,8 +79,7 @@ function createElements() {
   const img = document.createElement('img');
 img.src = `http://openweathermap.org/img/w/${state.image}.png`
 console.log(img)
-
-  document.body.append(img);
+document.body.append(img);
 
 }
 
