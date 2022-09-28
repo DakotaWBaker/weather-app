@@ -77,7 +77,10 @@ function createElements() {
 
   
   const img = document.createElement('img');
-  img.src = state.image;
+img.src = `http://openweathermap.org/img/w/${state.image}.png`
+console.log(img)
+
   document.body.append(img);
+
 }
 
