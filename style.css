@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    margin: 25px 0px 25px 0;
+}
+input {
+    text-align: center;
+    margin: 25px 15px 25px 0px;
+}
+
+.row {
+    justify-content: center;
+    border: 1px solid black;
+}
+.col {
+    text-align: center;
+    border: 1px solid black;
+}
+.header {
+    background-color: orange;
+}
+.container {
+    margin-bottom: 30px;
+    
+}
+.formDiv {
+    text-align: center;
+}
