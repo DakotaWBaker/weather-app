@@ -35,9 +35,10 @@ searchForm.addEventListener("submit", async function (e) {
   try {
     const inputValue = searchForm.elements.query.value;
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${inputValue},us&appid=1a925fe26c48d00ee3d76449f6a4a611`);
+      `https://api.openweathermap.org/data/2.5/weather?zip=${inputValue},us&appid=1a925fe26c48d00ee3d76449f6a4a611`
+    );
     updateState(response.data);
-    console.log(response.data)
+    console.log(response.data);
   } catch {
     alert("enter valid zip");
   }
@@ -75,11 +76,8 @@ function createElements() {
   tempC.innerHTML = state.temp.c;
   document.body.appendChild(tempC);
 
-  
-  const img = document.createElement('img');
-img.src = `http://openweathermap.org/img/w/${state.image}.png`
-console.log(img)
-document.body.append(img);
-
+  const img = document.createElement("img");
+  img.src = `http://openweathermap.org/img/w/${state.image}.png`;
+  console.log(img);
+  document.body.append(img);
 }
-
