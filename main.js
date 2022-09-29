@@ -16,6 +16,7 @@ zip.setAttribute("name", "query");
 let btn = document.createElement("input");
 btn.setAttribute("type", "submit");
 btn.setAttribute("value", "Get Weather");
+btn.setAttribute('class', 'btn')
 //append all
 searchForm.append(zip);
 searchForm.append(btn);
@@ -82,6 +83,7 @@ imgRow2.setAttribute("class", "row");
 imgContainer.appendChild(imgRow2);
 const image = document.createElement("img");
 image.setAttribute("class", "col");
+image.setAttribute('id', 'image');
 imgRow2.appendChild(image);
 //state object
 let state = {
@@ -117,15 +119,23 @@ function updateState(data) {
   state.temp.f = Math.round((data.main.temp - 273.15) * 1.8 + 32) + " f";
   state.temp.c = Math.round(data.main.temp - 273.15) + " c";
   state.image = data.weather[0].icon;
+  if (data.weather[0].icon === '10d' || data.weather[0].icon === '09d') {
+    document.body.style.backgroundImage = "url('images/rain.png')";
+  } else if (data.weather[0].icon === '01d') {
+    document.body.style.backgroundImage = "url('images/clear.jpg')";
+  } else if (data.weather[0].icon === '02d' || data.weather[0].icon === '03d' || data.weather[0].icon === '04d') {
+    document.body.style.backgroundImage = "url('images/cloudy1.jpg"
+  } 
+   else {console.log(false) }
+  
   updateElements();
 }
 
 function updateElements() {
   city.innerHTML = state.city;
-temperature.innerHTML = state.temp.k;
-fCol.innerHTML = state.temp.f;
-cCol.innerHTML = state.temp.c;
-condition.innerHTML = state.condition;
-image.src = `https://openweathermap.org/img/w/${state.image}.png`;
+  temperature.innerHTML = state.temp.k;
+  fCol.innerHTML = state.temp.f;
+  cCol.innerHTML = state.temp.c;
+  condition.innerHTML = state.condition;
+  image.src = `https://openweathermap.org/img/w/${state.image}.png`;
 }
-createElements();
