@@ -1,0 +1,38 @@
+ body {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    background: url(images/image.png) no-repeat;
+    background-size: cover;
+    height: 100vh;
+    }
+h1 {
+    text-align: center;
+    margin: 25px 0px 25px 0;
+}
+input {
+    text-align: center;
+    margin: 25px 15px 25px 0px;
+}
+
+.row {
+    justify-content: center;
+    border: 1px solid black;
+}
+.col {
+    text-align: center;
+    border: 1px solid black;
+}
+.header {
+    background-color: orange;
+}
+.container {
+    margin-bottom: 30px;
+    
+}
+.formDiv {
+    text-align: center;
+}
+
+.btn {
+    background-color:#28a745;
+}
