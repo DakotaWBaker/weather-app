@@ -32,3 +32,7 @@ input {
 .formDiv {
     text-align: center;
 }
+
+.btn {
+    background-color:#28a745;
+}
