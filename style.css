@@ -1,7 +1,10 @@
-body {
+ body {
     font-family: 'Share Tech Mono', monospace;
     font-size: 1.1rem;
-}
+    background: url(images/image.png) no-repeat;
+    background-size: cover;
+    height: 100vh;
+    }
 h1 {
     text-align: center;
     margin: 25px 0px 25px 0;
