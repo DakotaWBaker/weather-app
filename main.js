@@ -16,7 +16,12 @@ zip.setAttribute("name", "query");
 let btn = document.createElement("input");
 btn.setAttribute("type", "submit");
 btn.setAttribute("value", "Get Weather");
-btn.setAttribute('class', 'btn')
+btn.setAttribute("class", "btn");
+const locationButton = document.createElement("button");
+locationButton.setAttribute("class", "bi bi-geo-alt-fill btn btn-success");
+locationButton.setAttribute("id", "location");
+container.appendChild(locationButton);
+
 //append all
 searchForm.append(zip);
 searchForm.append(btn);
@@ -83,7 +88,7 @@ imgRow2.setAttribute("class", "row");
 imgContainer.appendChild(imgRow2);
 const image = document.createElement("img");
 image.setAttribute("class", "col");
-image.setAttribute('id', 'image');
+image.setAttribute("id", "image");
 imgRow2.appendChild(image);
 //state object
 let state = {
@@ -96,6 +101,20 @@ let state = {
   condition: "",
   image: "",
 };
+
+locationButton.addEventListener("click", function geoLocation() {
+  navigator.geolocation.getCurrentPosition((position) => {
+    geo(position.coords.latitude, position.coords.longitude);
+  });
+});
+
+async function geo(latitude, longitude) {
+  const resp = await axios.get(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1a925fe26c48d00ee3d76449f6a4a611`
+  );
+  updateState(resp.data);
+  console.log(resp.data);
+}
 
 searchForm.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -119,15 +138,16 @@ function updateState(data) {
   state.temp.f = Math.round((data.main.temp - 273.15) * 1.8 + 32) + " f";
   state.temp.c = Math.round(data.main.temp - 273.15) + " c";
   state.image = data.weather[0].icon;
-  if (data.weather[0].icon === '10d' || data.weather[0].icon === '09d') {
+  if (data.weather[0].main === "Rain" || data.weather[0].main === "Drizzle") {
     document.body.style.backgroundImage = "url('images/rain.png')";
-  } else if (data.weather[0].icon === '01d') {
+  } else if (data.weather[0].main === "Clear") {
     document.body.style.backgroundImage = "url('images/clear.jpg')";
-  } else if (data.weather[0].icon === '02d' || data.weather[0].icon === '03d' || data.weather[0].icon === '04d') {
-    document.body.style.backgroundImage = "url('images/cloudy1.jpg"
-  } 
-   else {console.log(false) }
-  
+  } else if (data.weather[0].main === "Clouds") {
+    document.body.style.backgroundImage = "url('images/cloudy1.jpg";
+  } else {
+    console.log(false);
+  }
+
   updateElements();
 }
 
