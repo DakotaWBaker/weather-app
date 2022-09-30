@@ -36,7 +36,9 @@
         * c:
     - condition: 
     -image: 
-
+* main container
+* api key
+* API link possibly?
 ## FUNCTIONS
 --- 
 #### getData()
