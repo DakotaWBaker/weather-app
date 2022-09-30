@@ -103,10 +103,11 @@ let state = {
 };
 
 if (localStorage !== null) {
-  updateElements()
+  updateElements();
 }
 //function for getting geolocation from user
-locationButton.addEventListener("click", function geoLocation() {  //listening for click on location button
+locationButton.addEventListener("click", function geoLocation() {
+  //listening for click on location button
   navigator.geolocation.getCurrentPosition((position) => {
     geo(position.coords.latitude, position.coords.longitude); //passing lat and long into geo function
   });
@@ -114,7 +115,7 @@ locationButton.addEventListener("click", function geoLocation() {  //listening f
 
 //function for calling api with lat and long. catching params lat and long
 async function geo(latitude, longitude) {
-  window.localStorage.removeItem('newState')
+  window.localStorage.removeItem("newState");
   const resp = await axios.get(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1a925fe26c48d00ee3d76449f6a4a611` //call api putting users lat and long in
   );
@@ -126,7 +127,7 @@ async function geo(latitude, longitude) {
 searchForm.addEventListener("submit", async function (e) {
   e.preventDefault(); //preventing default form submission
   try {
-    const inputValue = searchForm.elements.query.value;  //getting values from search form
+    const inputValue = searchForm.elements.query.value; //getting values from search form
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?zip=${inputValue},us&appid=1a925fe26c48d00ee3d76449f6a4a611` //calling api using input value as zip
     );
@@ -155,18 +156,17 @@ function updateState(data) {
   } else {
     console.log(false);
   }
-  window.localStorage.setItem('newState', JSON.stringify(state));
+  window.localStorage.setItem("newState", JSON.stringify(state));
   updateElements(); //calling update elements function
 }
 //updating html with new state object values
 function updateElements() {
-  let storage = JSON.parse(window.localStorage.getItem('newState'));
-  console.log(storage)
-  city.innerHTML = storage.city
+  let storage = JSON.parse(window.localStorage.getItem("newState"));
+  console.log(storage);
+  city.innerHTML = storage.city;
   temperature.innerHTML = storage.temp.k;
   fCol.innerHTML = storage.temp.f;
   cCol.innerHTML = storage.temp.c;
   condition.innerHTML = storage.condition;
   image.src = `https://openweathermap.org/img/w/${storage.image}.png`;
-  
 }
