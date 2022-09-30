@@ -102,8 +102,10 @@ let state = {
   image: "",
 };
 
-if (localStorage !== null) {
+if (localStorage.length > 0) {
   updateElements();
+} else {
+  console.log('rip');
 }
 //function for getting geolocation from user
 locationButton.addEventListener("click", function geoLocation() {
@@ -157,12 +159,13 @@ function updateState(data) {
     console.log(false);
   }
   window.localStorage.setItem("newState", JSON.stringify(state));
+
   updateElements(); //calling update elements function
 }
 //updating html with new state object values
 function updateElements() {
-  let storage = JSON.parse(window.localStorage.getItem("newState"));
-  console.log(storage);
+  const storage = JSON.parse(window.localStorage.getItem("newState"));
+  
   city.innerHTML = storage.city;
   temperature.innerHTML = storage.temp.k;
   fCol.innerHTML = storage.temp.f;
