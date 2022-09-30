@@ -102,35 +102,42 @@ let state = {
   image: "",
 };
 
-locationButton.addEventListener("click", function geoLocation() {
+if (localStorage !== null) {
+  updateElements()
+}
+//function for getting geolocation from user
+locationButton.addEventListener("click", function geoLocation() {  //listening for click on location button
   navigator.geolocation.getCurrentPosition((position) => {
-    geo(position.coords.latitude, position.coords.longitude);
+    geo(position.coords.latitude, position.coords.longitude); //passing lat and long into geo function
   });
 });
 
+//function for calling api with lat and long. catching params lat and long
 async function geo(latitude, longitude) {
+  window.localStorage.removeItem('newState')
   const resp = await axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1a925fe26c48d00ee3d76449f6a4a611`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1a925fe26c48d00ee3d76449f6a4a611` //call api putting users lat and long in
   );
-  updateState(resp.data);
-  console.log(resp.data);
+  updateState(resp.data); //calling update state function and sending resp and data from api as params
+  // console.log(resp.data);
 }
 
+//function for calling api. event listener on search form listening for submit
 searchForm.addEventListener("submit", async function (e) {
-  e.preventDefault();
+  e.preventDefault(); //preventing default form submission
   try {
-    const inputValue = searchForm.elements.query.value;
+    const inputValue = searchForm.elements.query.value;  //getting values from search form
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${inputValue},us&appid=1a925fe26c48d00ee3d76449f6a4a611`
+      `https://api.openweathermap.org/data/2.5/weather?zip=${inputValue},us&appid=1a925fe26c48d00ee3d76449f6a4a611` //calling api using input value as zip
     );
-    updateState(response.data);
+    updateState(response.data); //calling update state function passing response and data as parameters
     console.log(response.data);
   } catch {
-    alert("enter valid zip");
+    alert("enter valid zip"); //alert if api call fails bc user enter invalid zip
   }
-  searchForm.elements.query.value = "";
+  searchForm.elements.query.value = ""; //clearing search form after user submits zip code
 });
-
+//function to update the state object with new values from api
 function updateState(data) {
   state.city = data.name;
   state.condition = data.weather[0].description;
@@ -138,6 +145,7 @@ function updateState(data) {
   state.temp.f = Math.round((data.main.temp - 273.15) * 1.8 + 32) + " f";
   state.temp.c = Math.round(data.main.temp - 273.15) + " c";
   state.image = data.weather[0].icon;
+  //changing background images based on weather condition
   if (data.weather[0].main === "Rain" || data.weather[0].main === "Drizzle") {
     document.body.style.backgroundImage = "url('images/rain.png')";
   } else if (data.weather[0].main === "Clear") {
@@ -147,15 +155,18 @@ function updateState(data) {
   } else {
     console.log(false);
   }
-
-  updateElements();
+  window.localStorage.setItem('newState', JSON.stringify(state));
+  updateElements(); //calling update elements function
 }
-
+//updating html with new state object values
 function updateElements() {
-  city.innerHTML = state.city;
-  temperature.innerHTML = state.temp.k;
-  fCol.innerHTML = state.temp.f;
-  cCol.innerHTML = state.temp.c;
-  condition.innerHTML = state.condition;
-  image.src = `https://openweathermap.org/img/w/${state.image}.png`;
+  let storage = JSON.parse(window.localStorage.getItem('newState'));
+  console.log(storage)
+  city.innerHTML = storage.city
+  temperature.innerHTML = storage.temp.k;
+  fCol.innerHTML = storage.temp.f;
+  cCol.innerHTML = storage.temp.c;
+  condition.innerHTML = storage.condition;
+  image.src = `https://openweathermap.org/img/w/${storage.image}.png`;
+  
 }
